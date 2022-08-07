@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Cookie
 from fastapi.responses import RedirectResponse
 
 from core.discord import DiscordOauth2
@@ -20,3 +20,12 @@ async def redirect(code: str):
     response = RedirectResponse("https://mc-fdc.com/dashboard")
     response.set_cookie("token", token.access, expires=token.expires_in)
     return response
+
+@router.get("/me")
+async def me(token: str | None = Cookie(default=None)):
+    if token is None:
+        return {"status": False, "message": "Please login"}
+    else:
+        data = {"status": True, "message": None}
+        data.update(await oauth.fetch_user(token))
+        return data

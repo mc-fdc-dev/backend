@@ -12,7 +12,7 @@ oauth = DiscordOauth2(getenv("CLIENT_ID"), getenv("CLIENT_SECRET"))
 
 @router.get("/")
 def main():
-    return {"message": "Hello, World"}
+    return {"message": "Hello, World", "status": 200}
 
 @router.get("/redirect")
 async def redirect(code: str):

@@ -4,13 +4,15 @@ from aiomysql import create_pool
 from core import managers
 
 from typing import List
-from os import listdir
+
+from glob import glob
+from importlib import import_module
 
 app = FastAPI()
 app.state.backend: managers.WsManager = managers.WsManager()
 
-for router in listdir("routers"):
-    app.include_router(router.router)
+for router in glob("./routers/*.py"):
+    app.include_router(import_module(router).router)
 
 @app.on_event("startup")
 async def _startup():

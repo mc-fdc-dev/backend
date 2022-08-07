@@ -13,7 +13,7 @@ class BackendData(TypedDict):
     data: Any
 
 @router.websocket("/backend")
-async def backend(req: Request, ws: WebSocket):
+async def backend(ws: WebSocket):
     backend = request.state.backend
     await backend.connect(ws)
     while True:

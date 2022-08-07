@@ -31,3 +31,7 @@ async def me(token: Union[str, None] = Cookie(default=None)):
         data = {"status": True, "message": None}
         data.update(await oauth.fetch_user(token))
         return data
+
+@router.get("/guilds")
+def guilds():
+    return {"status": True}

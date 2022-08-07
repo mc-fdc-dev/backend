@@ -1,10 +1,11 @@
 from fastapi import FastAPI, WebSocket
 from aiomysql import create_pool
 
+from core import managers
 from typing import List
 
 app = FastAPI()
-app.state.websockets: List[WebSocket] = []
+app.state.websocket: managers.WsManager | None = None
 
 
 @app.on_event("startup")

@@ -5,7 +5,7 @@ from core import managers
 from typing import List
 
 app = FastAPI()
-app.state.websocket: managers.WsManager = managers.WsManager()
+app.state.backend: managers.WsManager = managers.WsManager()
 
 
 @app.on_event("startup")

@@ -5,7 +5,7 @@ from .token import Token
 
 class DiscordOauth2:
     BASEURL: str = "https://discord.com/api/v10"
-    REDIRECT_URI: str = "https://api.mc-fdc.com/redirect"
+    REDIRECT_URI: str = "https://api.mc-fdc.com/dashboard/redirect"
     def __init__(self, client_id: int, client_secret: str):
         self.client = AsyncClient(base_url=self.BASEURL)
         self.client_id = client_id

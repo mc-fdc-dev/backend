@@ -5,6 +5,8 @@ from core.discord import DiscordOauth2
 
 from os import getenv
 
+from typing import Union
+
 
 router = APIRouter(prefix="/dashboard")
 oauth = DiscordOauth2(getenv("CLIENT_ID"), getenv("CLIENT_SECRET"))
@@ -22,7 +24,7 @@ async def redirect(code: str):
     return response
 
 @router.get("/me")
-async def me(token: str | None = Cookie(default=None)):
+async def me(token: Union[str, None] = Cookie(default=None)):
     if token is None:
         return {"status": False, "message": "Please login"}
     else:

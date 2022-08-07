@@ -22,5 +22,5 @@ class WsManager:
             pass
         self.active_connection = None
 
-    async def send(self, type: str, data: Any):
-        await self.active_connection.send_text(dumps({"type": type, "data": data}))
+    async def send(self, type: str, data: Any, **kwargs):
+        await self.active_connection.send_text(dumps({"type": type, "data": data}), **kwargs)

@@ -1,4 +1,4 @@
-from oauth2 import *
+from .oauth2 import *
 
 
 __all__ = ("DiscordOauth2",)

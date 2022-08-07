@@ -1,4 +1,5 @@
 from fastapi import WebSocket
+from orjson import dumps
 
 from typing import Any
 

@@ -26,4 +26,4 @@ class DiscordOauth2:
         }, headers={
             "Content-Type": "application/x-www-form-urlencoded"
         })
-        return Token(r.json())
+        return Token(r.json(), self)

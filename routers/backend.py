@@ -18,6 +18,7 @@ async def backend(ws: WebSocket):
     await backend.connect(ws)
     while True:
         data: BackendData = loads(await ws.receive_text())
+        print(data)
         if data["type"] == "hello":
             if data["data"] == getenv("BACKEND_PASSWORD"):
                 await backend.send(type="success", data=None)

@@ -1,16 +1,23 @@
 from fastapi import WebSocket
 
 
+class WsManagerError(Exception):
+    pass
+
 class WsManager:
     def __init__(self):
-        self.active_connections: List[WebSocket] = []
+        self.active_connection: WebSocket | None = None
 
     async def connect(self, websocket: WebSocket) -> None:
         await websocket.accept()
-        self.active_connections.append(websocket)
+        self.active_connection = websocket
 
-    def disconnect(self, websocket: WebSocket):
-        self.active_connections.remove(websocket)
+    async def disconnect(self):
+        try:
+            await self.active_connection.close()
+        except Exception:
+            pass
+        self.active_connection = None
 
-    async def send(self, type: str, data: Any, websocket: WebSocket):
-        await websocket.send_text(dumps({"type": type, "data": data}))
+    async def send(self, type: str, data: Any):
+        await self.active_connection.send_text(dumps({"type": type, "data": data}))

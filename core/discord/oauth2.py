@@ -17,7 +17,7 @@ class DiscordOauth2:
         return res
 
     async def exchange_code(self, code: str) -> Token:
-        r = await self.request("/oauth2/token", data={
+        r = await self.request("POST", "/oauth2/token", data={
             "client_id": self.client_id,
             "client_secret": self.client_secret,
             "grant_type": "authorization_code",

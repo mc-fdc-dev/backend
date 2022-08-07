@@ -1,4 +1,5 @@
 from fastapi import FastAPI, WebSocket
+from fastapi.middleware.cors import CORSMiddleware
 from aiomysql import create_pool
 
 from core import managers
@@ -10,6 +11,17 @@ from importlib import import_module
 
 app = FastAPI()
 app.state.backend: managers.WsManager = managers.WsManager()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://mc-fdc.com",
+        "http://mc-fdc.com"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 for router_path in listdir("./routers"):
     app.include_router(import_module(f"routers.{router_path[:-3]}").router)

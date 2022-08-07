@@ -1,7 +1,10 @@
 from fastapi import FastAPI, WebSocket
 from aiomysql import create_pool
 
+from typing import List
+
 app = FastAPI()
+app.state.websockets: List[WebSocket] = []
 
 
 @app.on_event("startup")

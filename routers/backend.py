@@ -16,12 +16,8 @@ class WsManager:
     def disconnect(self, websocket: WebSocket):
         self.active_connections.remove(websocket)
 
-    async def send_personal_message(self, type: str, data: Any, websocket: WebSocket):
+    async def send(self, type: str, data: Any, websocket: WebSocket):
         await websocket.send_text(dumps({"type": type, "data": data}))
-
-    async def broadcast(self, message: str):
-        for connection in self.active_connections:
-            await connection.send_text(message)
 
 class BackendData(TypedDict):
     type: str

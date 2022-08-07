@@ -27,3 +27,9 @@ class DiscordOauth2:
             "Content-Type": "application/x-www-form-urlencoded"
         })
         return Token(r.json(), self)
+
+    async def fetch_user(self, token: str):
+        r = await self.request("GET", "/users/@me", headers={
+            "Authorization": "Bearer {}".format(token)
+        })
+        return r.json()

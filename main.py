@@ -5,7 +5,7 @@ from core import managers
 
 from typing import List
 
-from os import listdir
+from os import listdir, getenv
 from importlib import import_module
 
 app = FastAPI()
@@ -16,7 +16,7 @@ for router_path in listdir("./routers"):
 
 @app.on_event("startup")
 async def _startup():
-    app.state.pool = await create_pool(host=secret.DB_URL, port=3306, user=secret.DB_USERNAME, password=secret.DB_PASSWORD, db=secret.DB_DATABASE)
+    app.state.pool = await create_pool(host=getenv("DB_HOST"), port=3306, user=getenv("DB_USER"), password=getenv("DB_PASSWORD"), db=getenv("DB_NAME"))
     print("startup done")
 
 @app.get("/")

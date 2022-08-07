@@ -2,22 +2,11 @@ from fastapi import APIRouter, WebSocket, Request
 from orjson import loads, dumps
 
 from typing import TypedDict, Any
+from core import managers
+from os import getenv
+
 
 router = ApiRouter()
-
-class WsManager:
-    def __init__(self):
-        self.active_connections: List[WebSocket] = []
-
-    async def connect(self, websocket: WebSocket) -> None:
-        await websocket.accept()
-        self.active_connections.append(websocket)
-
-    def disconnect(self, websocket: WebSocket):
-        self.active_connections.remove(websocket)
-
-    async def send(self, type: str, data: Any, websocket: WebSocket):
-        await websocket.send_text(dumps({"type": type, "data": data}))
 
 class BackendData(TypedDict):
     type: str
@@ -25,8 +14,12 @@ class BackendData(TypedDict):
 
 @router.websocket("/backend")
 async def backend(req: Request, ws: WebSocket):
-    await ws.accept()
+    backend = request.state.backend
+    await backend.connect(ws)
     while True:
         data: BackendData = loads(await ws.receive_text())
         if data["type"] == "hello":
-            
+            if data["data"] == getenv("BACKEND_PASSWORD"):
+                await backend.send(type="success", data=None)
+            else:
+                await backend.disconnect()

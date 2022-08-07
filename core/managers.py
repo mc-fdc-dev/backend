@@ -1,5 +1,7 @@
 from fastapi import WebSocket
 
+from typing import Any
+
 
 class WsManagerError(Exception):
     pass

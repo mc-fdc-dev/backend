@@ -6,7 +6,7 @@ from core import managers
 from os import getenv
 
 
-router = ApiRouter()
+router = APIRouter()
 
 class BackendData(TypedDict):
     type: str

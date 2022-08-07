@@ -2,11 +2,15 @@ from fastapi import FastAPI, WebSocket
 from aiomysql import create_pool
 
 from core import managers
+
 from typing import List
+from os import listdir
 
 app = FastAPI()
 app.state.backend: managers.WsManager = managers.WsManager()
 
+for router in listdir("routers"):
+    app.include_router(router.router)
 
 @app.on_event("startup")
 async def _startup():

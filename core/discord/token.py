@@ -1,10 +1,7 @@
-from typing import TYPE_CHECKING, Dict
-
-if TYPE_CHECKING:
-    from .oauth2 import DiscordOauth2
+from typing import Dict
 
 class Token:
-    def __init__(self, data: Dict[str, str], oauth: DiscordOauth2):
+    def __init__(self, data: Dict[str, str], oauth: "DiscordOauth"):
         self.__data = data
 
     @property

@@ -1,15 +1,11 @@
 from typing import TYPE_CHECKING, Dict
 
-from datetime import datetime, timedelta
-
 if TYPE_CHECKING:
     from .oauth2 import DiscordOauth2
 
 class Token:
     def __init__(self, data: Dict[str, str], oauth: DiscordOauth2):
         self.__data = data
-        self._expires_in = datetime.now(
-        ) + timedelta(seconds=self.data["expires_in"])
 
     @property
     def access(self) -> str:
@@ -24,5 +20,5 @@ class Token:
         return self.__data["refresh_token"]
     
     @property
-    def expires_in(self) -> datetime:
-        return self._expires_in
+    def expires_in(self) -> int:
+        return int(self.__data["expires_in"])

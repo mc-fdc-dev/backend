@@ -13,7 +13,6 @@ class DiscordOauth2:
 
     async def request(self, method: str, path: str, **kwargs) -> Response:
         res = await self.client.request(method, path, **kwargs)
-        print(res.json())
         res.raise_for_status()
         return res
 

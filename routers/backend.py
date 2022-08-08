@@ -18,7 +18,7 @@ async def backend(ws: WebSocket):
     backend = ws.app.state.backend
     await backend.connect(ws)
     try:
-        data: BackendData = loads(await wait_for(ws.receive_text(), timeout=60))
+        data: BackendData = loads(await wait_for(manager.recv(), timeout=60))
         if data["type"] == "login":
             if data["data"] == getenv("BACKEND_PASSWORD"):
                 await backend.send(type="success", data=None)

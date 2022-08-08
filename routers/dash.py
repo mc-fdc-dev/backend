@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Cookie
+from fastapi import APIRouter, Cookie, Request
 from fastapi.responses import RedirectResponse
 
 from core.discord import DiscordOauth2
@@ -60,7 +60,11 @@ async def me(token: Union[str, None] = Cookie(default=None)):
         return data
 
 @router.get("/me/guilds/{guildid}")
-async def get_guild(guildid: int):
+async def get_guild(req: Request, guildid: int):
+    async with req.app.state.pool.acquire() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute("SELECT * FROM Guild WHERE GuildId=%s;", (guildid,))
+            guildid, name, icon = await cur.fetchone()
     return {"status": True}
 
 @router.get("/login")

@@ -1,4 +1,3 @@
-from socket import CAN_BCM_RX_CHECK_DLC
 from fastapi import APIRouter, Cookie
 from fastapi.responses import RedirectResponse
 
@@ -54,9 +53,9 @@ async def me(token: Union[str, None] = Cookie(default=None)):
         else:
             user = {
                 "user": await oauth.fetch_user(token),
-                "guilds": await oauth.fetch_guilds(token)
+                "guilds": await oauth.fetch_guilds(token),
+                "expire": time()
             }
-            user["expire"] = time()
             cache_users[token] = user
         data = {"status": True, "message": None}
         data.update(user)

@@ -2,3 +2,4 @@ fastapi[all]
 aiomysql
 orjson
 httpx
+psutil

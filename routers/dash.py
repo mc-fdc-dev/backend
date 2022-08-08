@@ -4,13 +4,24 @@ from fastapi.responses import RedirectResponse
 from core.discord import DiscordOauth2
 
 from os import getenv
+from threading import Thread
+from time import sleep
 
 from typing import Union
 
 
 router = APIRouter(prefix="/dashboard")
 oauth = DiscordOauth2(getenv("CLIENT_ID"), getenv("CLIENT_SECRET"))
+cache_users = [[
 
+
+class CacheManager(Thread):
+    def run(self):
+        while True:
+            for user in cache_users:
+                if user["expire"]:
+                    pass
+            sleep(300)
 
 @router.get("/")
 def main():

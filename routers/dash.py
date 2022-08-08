@@ -17,7 +17,7 @@ cache_users = {}
 
 class CacheManager(Thread):
     def __init__(self):
-        super().__init__(*args, **kwargs)
+        super().__init__()
         self.daemon: bool = True
 
     def run(self):

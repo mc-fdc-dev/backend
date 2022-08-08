@@ -14,7 +14,6 @@ from typing import Union
 router = APIRouter(prefix="/dashboard")
 oauth = DiscordOauth2(getenv("CLIENT_ID"), getenv("CLIENT_SECRET"))
 cache_users = {}
-cache_user_guilds = {}
 
 class CacheManager(Thread):
     def __init__(self):
@@ -53,25 +52,12 @@ async def me(token: Union[str, None] = Cookie(default=None)):
         if token in cache_users:
             user = cache_users[token]
         else:
-            user = await oauth.fetch_user(token)
+            user = {
+                "user": await oauth.fetch_user(token),
+                "guilds": await oauth.fetch_guilds(token)
+            }
             user["expire"] = time()
             cache_users[token] = user
-        data = {"status": True, "message": None}
-        data.update(user)
-        del data["expire"]
-        return data
-    
-@router.get("/me/guilds")
-async def guilds(token: Union[str, None] = Cookie(default=None)):
-    if token is None:
-        return {"status": False, "message": "Please login"}
-    else:
-        if token in cache_user_guilds:
-            user = cache_user_guilds[token]
-        else:
-            user = await oauth.fetch_guilds(token)
-            user["expire"] = time()
-            cache_user_guilds[token] = user
         data = {"status": True, "message": None}
         data.update(user)
         del data["expire"]

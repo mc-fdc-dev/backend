@@ -28,7 +28,7 @@ class CacheManager(Thread):
             for token in cache_user_guilds:
                 if cache_user_guilds[token]["expire"] > time():
                     del cache_user_guilds[token]
-            sleep(300)
+            sleep(600)
 
 cache = CacheManager()
 cache.start()

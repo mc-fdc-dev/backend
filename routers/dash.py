@@ -1,3 +1,4 @@
+from socket import CAN_BCM_RX_CHECK_DLC
 from fastapi import APIRouter, Cookie
 from fastapi.responses import RedirectResponse
 
@@ -14,7 +15,6 @@ router = APIRouter(prefix="/dashboard")
 oauth = DiscordOauth2(getenv("CLIENT_ID"), getenv("CLIENT_SECRET"))
 cache_users = {}
 
-"""
 class CacheManager(Thread):
     def __init__(self):
         super().__init__()
@@ -27,8 +27,8 @@ class CacheManager(Thread):
                     del cache_users[token]
             sleep(300)
 
-CacheManager().run()
-"""
+cache = CacheManager()
+cache.start()
 
 @router.get("/")
 def main():

@@ -31,7 +31,10 @@ for router_path in listdir("./routers"):
 
 @app.on_event("startup")
 async def _startup():
-    app.state.pool = await create_pool(host=getenv("DB_HOST"), port=3306, user=getenv("DB_USER"), password=getenv("DB_PASSWORD"), db=getenv("DB_NAME"))
+    app.state.pool = await create_pool(
+        host=getenv("DB_HOST"), port=3306, user=getenv("DB_USER"),
+        password=getenv("DB_PASSWORD"), db=getenv("DB_NAME")
+    )
     print("startup done")
 
 @app.get("/")

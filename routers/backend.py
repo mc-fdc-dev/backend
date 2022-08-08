@@ -31,5 +31,5 @@ async def backend(ws: WebSocket):
     except TimeoutError:
         await backend.disconnect(message="Timeout")
     while True:
-        data: BackendData = loads(await ws.receive_text())
+        data: BackendData = await backend.recv()
         print(data)

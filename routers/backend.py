@@ -22,6 +22,7 @@ async def backend(ws: WebSocket):
         if data["type"] == "login":
             if data["data"] == getenv("BACKEND_PASSWORD"):
                 await backend.send(type="success", data=None)
+                backend.heartbeat.run()
                 print("Logined")
             else:
                 await backend.disconnect(message="Password is invalid")

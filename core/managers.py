@@ -23,6 +23,7 @@ class HeartBeat:
 
     async def main(self):
         while True:
+            print("Send heartbeat")
             await manager.send("heartbeat", "ping")
             try:
                 await asyncio.wait_for(manager.recv(), timeout=10)

@@ -64,7 +64,7 @@ class WsManager:
         self.active_connection = None
 
     async def send(self, type: str, data: Any, **kwargs):
-        await self.active_connection.send_text(dumps({"type": type, "data": data}), **kwargs)
+        await self.active_connection.send_json({"type": type, "data": data}, **kwargs)
 
     async def recv(self) -> dict:
         return loads(await self.active_connection.receive_text())

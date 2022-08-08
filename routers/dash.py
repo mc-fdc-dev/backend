@@ -14,7 +14,7 @@ router = APIRouter(prefix="/dashboard")
 oauth = DiscordOauth2(getenv("CLIENT_ID"), getenv("CLIENT_SECRET"))
 cache_users = {}
 
-
+"""
 class CacheManager(Thread):
     def __init__(self):
         super().__init__()
@@ -28,6 +28,7 @@ class CacheManager(Thread):
             sleep(300)
 
 CacheManager().run()
+"""
 
 @router.get("/")
 def main():

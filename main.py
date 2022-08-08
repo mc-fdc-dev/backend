@@ -1,12 +1,10 @@
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 from aiomysql import create_pool
 
 from core import managers
-
-from typing import List
 
 from os import listdir, getenv
 from importlib import import_module
@@ -26,6 +24,9 @@ app.add_middleware(
 )
 
 for router_path in listdir("./routers"):
+    if router_path.startswith("__"):
+        continue
+    print(router_path)
     app.include_router(import_module(f"routers.{router_path[:-3]}").router)
 
 @app.on_event("startup")
@@ -37,6 +38,6 @@ async def _startup():
 def main():
     return {"status": 200, "message": "Hello, World"}
 
-# if __name__ == "__main__":
-print("Running at {}".format(getenv("PORT")))
-uvicorn.run("main:app", host="0.0.0.0", port=int(getenv("PORT", 8080)), log_level="info")
+if __name__ == "__main__":
+    print("Running at {}".format(getenv("PORT")))
+    uvicorn.run("main:app", host="0.0.0.0", port=int(getenv("PORT", "8080")))

@@ -28,21 +28,21 @@ class HeartBeat:
             await asyncio.sleep(60)
     
     async def send_heartbeat(self):
-        await manager.send("heartbeat", "ping")
+        await self.manager.send("heartbeat", "ping")
     
     async def wait_heartbeat(self):
         try:
-            data = await asyncio.wait_for(manager.recv(), timeout=10)
+            data = await asyncio.wait_for(self.manager.recv(), timeout=10)
             if data["type"] == "heartbeat":
                 if data["data"] == "pong":
-                    await manager.send("heartbeat", "success")
+                    await self.manager.send("heartbeat", "success")
                 else:
-                    await manager.send("heartbeat", "invalid")
+                    await self.manager.send("heartbeat", "invalid")
                     await self.wait_heartbeat()
             else:
                 await self.wait_heartbeat()
         except asyncio.TimeoutError:
-            await manager.close(message="Please send heartbeat")
+            await self.manager.close(message="Please send heartbeat")
             self.closed = True
 
 class WsManager:

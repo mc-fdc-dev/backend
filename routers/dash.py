@@ -59,6 +59,10 @@ async def me(token: Union[str, None] = Cookie(default=None)):
         del data["expire"]
         return data
 
+@router.get("/me/guilds/{guildid}")
+async def get_guild(guildid: int):
+    return {"status": True}
+
 @router.get("/login")
 def login():
     return RedirectResponse("https://discord.com/api/oauth2/authorize?client_id=1002877676526239794&redirect_uri=https%3A%2F%2Fapi.mc-fdc.com%2Fdashboard%2Fredirect&response_type=code&scope=identify%20guilds")

@@ -68,7 +68,7 @@ async def guilds(token: Union[str, None] = Cookie(default=None)):
         if token in cache_user_guilds:
             user = cache_user_guilds[token]
         else:
-            user = await oauth.fetch_user(token)
+            user = await oauth.fetch_guilds(token)
             user["expire"] = time()
             cache_user_guilds[token] = user
         data = {"status": True, "message": None}

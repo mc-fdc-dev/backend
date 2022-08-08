@@ -33,6 +33,7 @@ class HeartBeat:
     async def wait_heartbeat(self):
         try:
             data = await asyncio.wait_for(self.manager.recv(), timeout=10)
+            print(data)
             if data["type"] == "heartbeat":
                 if data["data"] == "pong":
                     await self.manager.send("heartbeat", "success")

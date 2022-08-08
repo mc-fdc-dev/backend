@@ -39,4 +39,4 @@ def main():
 
 # if __name__ == "__main__":
 print("Running at {}".format(getenv("PORT")))
-uvicorn.run("main:app", host="0.0.0.0", port=int(getenv("PORT")), log_level="info")
+uvicorn.run("main:app", host="0.0.0.0", port=int(getenv("PORT", 8080)), log_level="info")

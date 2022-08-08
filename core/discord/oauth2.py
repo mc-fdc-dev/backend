@@ -28,8 +28,14 @@ class DiscordOauth2:
         })
         return Token(r.json(), self)
 
-    async def fetch_user(self, token: str):
+    async def fetch_user(self, token: str) -> dict:
         r = await self.request("GET", "/users/@me", headers={
+            "Authorization": "Bearer {}".format(token)
+        })
+        return r.json()
+
+    async def fetch_guilds(self, token: str) -> dict:
+        r = await self.request("GET", "/users/@me/guilds", headers={
             "Authorization": "Bearer {}".format(token)
         })
         return r.json()

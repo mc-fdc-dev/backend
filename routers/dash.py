@@ -12,7 +12,7 @@ from typing import Union
 
 router = APIRouter(prefix="/dashboard")
 oauth = DiscordOauth2(getenv("CLIENT_ID"), getenv("CLIENT_SECRET"))
-cache_users = [[
+cache_users = []
 
 
 class CacheManager(Thread):

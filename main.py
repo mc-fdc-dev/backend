@@ -1,5 +1,7 @@
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
+
 from aiomysql import create_pool
 
 from core import managers
@@ -34,3 +36,6 @@ async def _startup():
 @app.get("/")
 def main():
     return {"status": 200, "message": "Hello, World"}
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", port=int(getenv("PORT")), log_level="info")

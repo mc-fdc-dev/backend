@@ -26,7 +26,6 @@ app.add_middleware(
 for router_path in listdir("./routers"):
     if router_path.startswith("__"):
         continue
-    print(router_path)
     app.include_router(import_module(f"routers.{router_path[:-3]}").router)
 
 @app.on_event("startup")

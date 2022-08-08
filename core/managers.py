@@ -37,6 +37,8 @@ class WsManager:
 
     async def connect(self, websocket: WebSocket) -> None:
         await websocket.accept()
+        self.heartbeat = HeartBeat(self)
+        self.heartbeat.run()
         self.active_connection = websocket
 
     async def disconnect(self):

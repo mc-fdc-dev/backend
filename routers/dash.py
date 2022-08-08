@@ -58,6 +58,7 @@ async def me(token: Union[str, None] = Cookie(default=None)):
             cache_users[token] = user
         data = {"status": True, "message": None}
         data.update(user)
+        del data["expire"]
         return data
     
 @router.get("/me/guilds")
@@ -73,6 +74,7 @@ async def guilds(token: Union[str, None] = Cookie(default=None)):
             cache_user_guilds[token] = user
         data = {"status": True, "message": None}
         data.update(user)
+        del data["expire"]
         return data
 
 @router.get("/login")

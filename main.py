@@ -37,6 +37,6 @@ async def _startup():
 def main():
     return {"status": 200, "message": "Hello, World"}
 
-if __name__ == "__main__":
-    print("Running at {}".format(getenv("PORT")))
-    uvicorn.run("main:app", host="0.0.0.0", port=int(getenv("PORT")), log_level="info")
+# if __name__ == "__main__":
+print("Running at {}".format(getenv("PORT")))
+uvicorn.run("main:app", host="0.0.0.0", port=int(getenv("PORT")), log_level="info")

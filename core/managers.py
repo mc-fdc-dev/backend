@@ -67,7 +67,7 @@ class WsManager:
         await self.active_connection.send_json({"type": type, "data": data}, **kwargs)
 
     async def recv(self) -> dict:
-        return loads(await self.active_connection.receive_text())
+        return await self.active_connection.receive_json(mode="text")
     
     @property
     def closed(self):

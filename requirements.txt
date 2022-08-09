@@ -3,3 +3,4 @@ aiomysql
 orjson
 httpx
 psutil
+pyppeteer

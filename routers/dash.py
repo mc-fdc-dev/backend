@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Cookie, Request
+from fastapi import APIRouter, Cookie, Request, HTTPException
 from fastapi.responses import RedirectResponse
 
 from core.discord import DiscordOauth2
@@ -13,6 +13,7 @@ from typing import Union
 router = APIRouter(prefix="/dashboard")
 oauth = DiscordOauth2(getenv("CLIENT_ID"), getenv("CLIENT_SECRET"))
 cache_users = {}
+cooldowns = {}
 
 class CacheManager(Thread):
     def __init__(self):
@@ -41,7 +42,12 @@ async def redirect(code: str):
     return response
 
 @router.get("/me")
-async def me(token: Union[str, None] = Cookie(default=None)):
+async def me(request: Request, token: Union[str, None] = Cookie(default=None)):
+    if request.client.host in cooldowns:
+        if time() < cooldowns[request.client.host]:
+            cooldowns[request.client.host] = time() + 30
+            raise HTTPException(status_code=403, "Too many access")
+    cooldowns[request.client.host] = time() + 30
     if token is None:
         return {"status": False, "message": "Please login"}
     else:

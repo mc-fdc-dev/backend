@@ -46,7 +46,7 @@ async def me(request: Request, token: Union[str, None] = Cookie(default=None)):
     if request.client.host in cooldowns:
         if cooldowns[request.client.host] > time():
             raise HTTPException(status_code=403, detail="Too many access")
-    cooldowns[request.client.host] = time() + 30
+    cooldowns[request.client.host] = time() + 5
     if token is None:
         return {"status": False, "message": "Please login"}
     else:

@@ -45,7 +45,7 @@ async def redirect(code: str):
 async def me(request: Request, token: Union[str, None] = Cookie(default=None)):
     if request.client.host in cooldowns:
         if cooldowns[request.client.host] > time():
-            raise HTTPException(status_code=403, "Too many access")
+            raise HTTPException(status_code=403, detail="Too many access")
     cooldowns[request.client.host] = time() + 30
     if token is None:
         return {"status": False, "message": "Please login"}

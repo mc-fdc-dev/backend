@@ -4,3 +4,4 @@ orjson
 httpx
 psutil
 jishaku
+jwt
